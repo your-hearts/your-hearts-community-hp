@@ -1717,3 +1717,22 @@ body.modal-open {
 .login-card .brand-logo-full {
   mix-blend-mode: multiply;
 }
+
+/* トップページの説明文を1行表示にする */
+.hero [data-hero-lead] {
+  max-width: none;
+  white-space: nowrap;
+}
+
+/* フッター下部のロゴを背景に埋もれないようにする */
+.site-footer .brand {
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+}
+
+/* フッターのロゴだけ合成表示を解除する */
+.site-footer .brand-logo-full {
+  mix-blend-mode: normal;
+}

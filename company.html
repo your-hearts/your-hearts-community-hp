@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="ユアハーツ コミュニティの紹介案件一覧。人材紹介案件、外国人人材紹介案件、不動産仲介案件を掲載。">
-    <title>案件一覧 | ユアハーツ コミュニティ</title>
+    <meta name="description" content="ユアハーツ コミュニティを運営する株式会社リライフの会社概要。">
+    <title>会社概要 | ユアハーツ コミュニティ</title>
     <link rel="icon" href="assets/your-hearts-logo.webp" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/site.css?v=hero-image">
-    <script type="module" src="scripts/app.js?v=jobs-wording-update"></script>
+    <script type="module" src="scripts/app.js?v=hero-image"></script>
   </head>
   <body>
     <header class="site-header">
@@ -37,41 +37,22 @@
     <main>
       <section class="page-hero">
         <div class="section-inner">
-          <h1>案件一覧</h1>
-          <p>現在は、人材紹介案件・人材紹介案件（外国人）・不動産仲介の案件を掲載しています。<br>案件は今後随時追加される予定です。</p>
+          <h1>会社概要</h1>
+          <p>ユアハーツ コミュニティを運営する株式会社リライフの概要をまとめています。</p>
         </div>
       </section>
 
-      <section class="pickup-section" aria-label="ピックアップ案件">
-        <div class="pickup-head">
-          <strong>注目案件</strong>
-        </div>
-        <div class="pickup-marquee">
-          <div class="pickup-track" id="pickupTrack"></div>
-        </div>
-      </section>
-
-      <section class="section" id="jobs">
-        <div class="section-inner">
-          <div class="job-toolbar">
-            <div class="section-head">
-              <h2>掲載中の案件</h2>
-              <p class="muted">気になる案件は詳細を確認し、お問い合わせからご相談ください。</p>
-            </div>
-            <div class="job-count" id="jobCount" aria-live="polite"></div>
+      <section class="section">
+        <div class="section-inner mission-layout">
+          <div class="section-head">
+            <h2>運営会社情報</h2>
+            <p class="muted">運営会社の基本情報を掲載しています。</p>
           </div>
-          <div class="job-filters" id="jobFilters"></div>
-          <div class="jobs-grid" id="jobsGrid"></div>
+          <table class="office-table">
+            <tbody id="companyProfile"></tbody>
+          </table>
         </div>
       </section>
-
-      <div class="job-modal" id="jobModal" aria-hidden="true">
-        <div class="job-modal__backdrop" data-close-job-modal></div>
-        <article class="job-modal__panel" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle">
-          <button class="job-modal__close" type="button" data-close-job-modal aria-label="詳細を閉じる">×</button>
-          <div id="jobModalContent"></div>
-        </article>
-      </div>
     </main>
 
     <footer class="site-footer">

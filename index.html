@@ -3,208 +3,129 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>管理画面 | ユアハーツ コミュニティ</title>
+    <meta name="description" content="ユアハーツ コミュニティとは。介護・福祉の経験を価値に変え、学び、案件紹介、報酬還元を支える仕組み。">
+    <title>ユアハーツ コミュニティ | ユアハーツ コミュニティ</title>
     <link rel="icon" href="assets/your-hearts-logo.webp" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/site.css?v=hero-image">
-    <script type="module" src="scripts/admin.js?v=seo1"></script>
+    <link rel="stylesheet" href="styles/site.css?v=hero-title-one-line">
+    <script type="module" src="scripts/app.js?v=school-name-update"></script>
   </head>
-  <body class="admin-body">
-    <section class="login-screen" id="loginScreen">
-      <form class="login-card" id="loginForm">
-        <img class="brand-logo-full" src="assets/your-hearts-logo.webp" alt="ユアハーツ コミュニティ">
-        <h1>管理画面ログイン</h1>
-        <p>テスト中はID・パスワード未設定のため、空欄のままログインできます。</p>
-        <div class="field">
-          <label for="loginEmail">ID（メールアドレス）</label>
-          <input id="loginEmail" type="email" autocomplete="username" placeholder="admin@example.com">
-        </div>
-        <div class="field">
-          <label for="loginPassword">パスワード</label>
-          <input id="loginPassword" type="password" autocomplete="current-password">
-        </div>
-        <button class="save-button" type="submit">ログイン</button>
-        <p class="form-status" id="loginStatus" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <main class="admin-shell">
-      <header class="admin-header">
-        <div>
-          <p class="section-kicker">Admin</p>
-          <h1>サイト管理画面</h1>
-          <p class="admin-note">このモックでは変更内容をブラウザ内に保存します。JSONの書き出し・読み込みで内容を移管できます。</p>
-        </div>
-        <div class="admin-actions">
-          <a class="ghost-button" href="index.html">表示サイトへ</a>
-          <button class="ghost-button" id="exportJson" type="button">JSONを書き出す</button>
-          <label class="ghost-button" for="importJson">JSONを読み込む</label>
-          <input id="importJson" type="file" accept="application/json" hidden>
-          <button class="danger-button" id="resetContent" type="button">初期化</button>
-        </div>
-      </header>
-
-      <div class="admin-grid">
-        <aside class="admin-panel">
-          <h2>案件一覧</h2>
-          <p class="admin-note">増減する案件はここで追加・複製・削除します。</p>
-          <div class="row-actions">
-            <button class="save-button" id="newJob" type="button">案件を追加</button>
-            <button class="ghost-button" id="duplicateJob" type="button">複製</button>
-            <button class="danger-button" id="deleteJob" type="button">削除</button>
-          </div>
-          <div class="job-list" id="jobList"></div>
-        </aside>
-
-        <section class="editor-card">
-          <h2>基本情報・トップ</h2>
-          <div class="editor-grid">
-            <div class="field">
-              <label for="brandName">ブランド名</label>
-              <input id="brandName">
-            </div>
-            <div class="field">
-              <label for="brandLabel">ラベル</label>
-              <input id="brandLabel">
-            </div>
-            <div class="field full">
-              <label for="brandTagline">タグライン</label>
-              <input id="brandTagline">
-            </div>
-            <div class="field full">
-              <label for="brandLogo">ロゴURL</label>
-              <input id="brandLogo">
-              <input id="logoUpload" type="file" accept="image/*">
-            </div>
-            <div class="field">
-              <label for="lineUrl">公式公式LINE URL</label>
-              <input id="lineUrl">
-            </div>
-            <div class="field">
-              <label for="openChatUrl">オープンチャットURL</label>
-              <input id="openChatUrl">
-            </div>
-            <div class="field full">
-              <label for="xUrl">X URL</label>
-              <input id="xUrl">
-            </div>
-            <div class="field">
-              <label for="heroEyebrow">ヒーロー小見出し</label>
-              <input id="heroEyebrow">
-            </div>
-            <div class="field">
-              <label for="heroTitle">ヒーロータイトル</label>
-              <input id="heroTitle">
-            </div>
-            <div class="field full">
-              <label for="heroLead">ヒーロー本文</label>
-              <textarea id="heroLead" rows="4"></textarea>
-            </div>
-            <div class="field">
-              <label for="heroPrimary">メインCTA</label>
-              <input id="heroPrimary">
-            </div>
-            <div class="field">
-              <label for="heroSecondary">サブCTA</label>
-              <input id="heroSecondary">
-            </div>
-            <div class="field full">
-              <label for="heroMedia">トップ画像URL</label>
-              <input id="heroMedia">
-              <input id="heroMediaUpload" type="file" accept="image/*">
-              <div class="preview-thumb" id="heroPreview" aria-hidden="true"></div>
-            </div>
-          </div>
-          <button class="save-button" id="saveMain" type="button">基本情報を保存</button>
-        </section>
-
-        <section class="editor-card">
-          <h2>SEO / メタディスクリプション</h2>
-          <p class="admin-note">検索結果の説明文候補になる文章です。Googleは必ずこの文を表示するわけではありませんが、ページ内容と合っているほど採用されやすくなります。</p>
-          <div class="editor-grid">
-            <div class="field full">
-              <label for="seoIndex">ユアハーツ コミュニティとは</label>
-              <textarea id="seoIndex" rows="3"></textarea>
-            </div>
-            <div class="field full">
-              <label for="seoJobs">案件一覧</label>
-              <textarea id="seoJobs" rows="3"></textarea>
-            </div>
-            <div class="field full">
-              <label for="seoContact">お問い合わせ</label>
-              <textarea id="seoContact" rows="3"></textarea>
-            </div>
-            <div class="field full">
-              <label for="seoCompany">会社概要</label>
-              <textarea id="seoCompany" rows="3"></textarea>
-            </div>
-          </div>
-          <button class="save-button" id="saveSeo" type="button">SEOを保存</button>
-        </section>
-
-        <section class="editor-card">
-          <h2>案件編集</h2>
-          <div class="editor-grid">
-            <div class="field">
-              <label for="jobId">ID</label>
-              <input id="jobId" data-job-field>
-            </div>
-            <div class="field">
-              <label for="jobAudience">対象</label>
-              <select id="jobAudience" data-job-field>
-                <option value="individual">個人向け</option>
-                <option value="referral">紹介案件</option>
-                <option value="corporate">企業向け</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="jobCategory">カテゴリ</label>
-              <input id="jobCategory" data-job-field>
-            </div>
-            <div class="field">
-              <label for="jobStatus">状態</label>
-              <input id="jobStatus" data-job-field>
-            </div>
-            <div class="field">
-              <label for="jobPickup">ピックアップ</label>
-              <select id="jobPickup" data-job-field>
-                <option value="false">通常</option>
-                <option value="true">上部で流す</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label for="jobTitle">タイトル</label>
-              <input id="jobTitle" data-job-field>
-            </div>
-            <div class="field full">
-              <label for="jobSummary">概要</label>
-              <textarea id="jobSummary" rows="4" data-job-field></textarea>
-            </div>
-            <div class="field full">
-              <label for="jobReward">紹介料・報酬表示</label>
-              <input id="jobReward" data-job-field>
-            </div>
-            <div class="field full">
-              <label for="jobDetails">詳細項目JSON</label>
-              <textarea id="jobDetails" rows="8" data-job-field></textarea>
-            </div>
-          </div>
-          <button class="save-button" id="saveJob" type="button">案件を保存</button>
-        </section>
-
-        <section class="editor-card">
-          <h2>全データJSON</h2>
-          <p class="admin-note">目的、悩み、活動内容、報酬説明、運営情報など、細かな文言はここで直接編集できます。</p>
-          <div class="field">
-            <label for="jsonEditor">サイトデータ</label>
-            <textarea class="json-editor" id="jsonEditor" spellcheck="false"></textarea>
-          </div>
-          <button class="save-button" id="saveJson" type="button">JSONを保存</button>
-        </section>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="ユアハーツ コミュニティ">
+          <img class="brand-logo-full" src="assets/your-hearts-logo.webp" alt="ユアハーツ コミュニティ">
+        </a>
+        <nav class="nav" aria-label="主要ナビゲーション">
+          <a href="index.html">ユアハーツ コミュニティ</a>
+          <a href="jobs.html">案件一覧</a>
+          <a href="contact.html">お問い合わせ</a>
+          <a href="company.html">会社概要</a>
+        </nav>
+        <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="メニューを開く">≡</button>
       </div>
-      <p class="form-status" id="status" aria-live="polite"></p>
+      <nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
+        <a href="index.html">ユアハーツ コミュニティ</a>
+        <a href="jobs.html">案件一覧</a>
+        <a href="contact.html">お問い合わせ</a>
+        <a href="company.html">会社概要</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow" data-hero-eyebrow>ユアハーツ コミュニティ</p>
+            <h1 data-hero-title>共に成長し、共に稼ぎ、共に豊かになる</h1>
+            <div class="hero-media kinetic-panel" data-hero-media aria-label="ユアハーツ コミュニティのイメージ画像"></div>
+            <p data-hero-lead></p>
+            <div class="hero-actions">
+              <a class="button primary" href="contact.html" data-primary-cta>お問い合わせする</a>
+              <a class="button secondary" href="jobs.html" data-secondary-cta>案件を見る</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="purpose">
+        <div class="section-inner">
+          <div class="section-head center">
+            <h2>私たちが掲げる3つの目的</h2>
+          </div>
+          <div class="purpose-grid" id="purposes"></div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <div class="section-head center">
+            <h2>このような方におすすめです</h2>
+          </div>
+          <ul class="concerns" id="concerns"></ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="section-head center">
+            <h2>具体的な活動内容</h2>
+          </div>
+          <div class="activity-grid" id="activities"></div>
+        </div>
+      </section>
+
+      <section class="section dark" id="system">
+        <div class="section-inner system-layout">
+          <div>
+            <div class="section-head">
+              <h2>想いを価値へ変えるコミュニティの流れ</h2>
+              <p class="muted" data-system-lead></p>
+            </div>
+            <div class="kinetic-panel">
+              <div class="kinetic-panel__content">
+                <strong data-brand-tagline>共に成長し、共に稼ぎ、共に豊かになる</strong>
+                <span>学び・交流・紹介・活動が循環するコミュニティ</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="steps-grid" id="steps"></div>
+            <div class="reward-box" id="rewardExample"></div>
+            <ul class="distribution" id="distribution"></ul>
+            <ul class="conditions" id="conditions"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="mission">
+        <div class="section-inner mission-layout">
+          <div class="section-head">
+            <h2 data-mission-title>このコミュニティが生まれた理由</h2>
+          </div>
+          <div class="mission-copy reveal" id="missionParagraphs"></div>
+        </div>
+      </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="brand" href="index.html" aria-label="ユアハーツ コミュニティ">
+          <img class="brand-logo-full" src="assets/your-hearts-logo.webp" alt="ユアハーツ コミュニティ">
+        </a>
+        <div class="footer-links">
+          <a href="index.html">ユアハーツ コミュニティ</a>
+          <a href="jobs.html">案件一覧</a>
+          <a href="contact.html">お問い合わせ</a>
+          <a href="company.html">会社概要</a>
+          <a data-line-link href="#" target="_blank" rel="noopener">公式LINE</a>
+          <a data-open-chat href="#" target="_blank" rel="noopener">LINEオープンチャット</a>
+          <a data-x-link href="#" target="_blank" rel="noopener">X</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

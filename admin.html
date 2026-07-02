@@ -1,90 +1,210 @@
-import { defaultData } from "./site-data.js?v=school-name-update";
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理画面 | ユアハーツ コミュニティ</title>
+    <link rel="icon" href="assets/your-hearts-logo.webp" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/site.css?v=hero-image">
+    <script type="module" src="scripts/admin.js?v=seo1"></script>
+  </head>
+  <body class="admin-body">
+    <section class="login-screen" id="loginScreen">
+      <form class="login-card" id="loginForm">
+        <img class="brand-logo-full" src="assets/your-hearts-logo.webp" alt="ユアハーツ コミュニティ">
+        <h1>管理画面ログイン</h1>
+        <p>テスト中はID・パスワード未設定のため、空欄のままログインできます。</p>
+        <div class="field">
+          <label for="loginEmail">ID（メールアドレス）</label>
+          <input id="loginEmail" type="email" autocomplete="username" placeholder="admin@example.com">
+        </div>
+        <div class="field">
+          <label for="loginPassword">パスワード</label>
+          <input id="loginPassword" type="password" autocomplete="current-password">
+        </div>
+        <button class="save-button" type="submit">ログイン</button>
+        <p class="form-status" id="loginStatus" aria-live="polite"></p>
+      </form>
+    </section>
 
-const STORAGE_KEY = "your-hearts-community-content-v2";
+    <main class="admin-shell">
+      <header class="admin-header">
+        <div>
+          <p class="section-kicker">Admin</p>
+          <h1>サイト管理画面</h1>
+          <p class="admin-note">このモックでは変更内容をブラウザ内に保存します。JSONの書き出し・読み込みで内容を移管できます。</p>
+        </div>
+        <div class="admin-actions">
+          <a class="ghost-button" href="index.html">表示サイトへ</a>
+          <button class="ghost-button" id="exportJson" type="button">JSONを書き出す</button>
+          <label class="ghost-button" for="importJson">JSONを読み込む</label>
+          <input id="importJson" type="file" accept="application/json" hidden>
+          <button class="danger-button" id="resetContent" type="button">初期化</button>
+        </div>
+      </header>
 
-export function clone(value) {
-  return JSON.parse(JSON.stringify(value));
-}
+      <div class="admin-grid">
+        <aside class="admin-panel">
+          <h2>案件一覧</h2>
+          <p class="admin-note">増減する案件はここで追加・複製・削除します。</p>
+          <div class="row-actions">
+            <button class="save-button" id="newJob" type="button">案件を追加</button>
+            <button class="ghost-button" id="duplicateJob" type="button">複製</button>
+            <button class="danger-button" id="deleteJob" type="button">削除</button>
+          </div>
+          <div class="job-list" id="jobList"></div>
+        </aside>
 
-export function loadData() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (!saved) return normalize(clone(defaultData));
+        <section class="editor-card">
+          <h2>基本情報・トップ</h2>
+          <div class="editor-grid">
+            <div class="field">
+              <label for="brandName">ブランド名</label>
+              <input id="brandName">
+            </div>
+            <div class="field">
+              <label for="brandLabel">ラベル</label>
+              <input id="brandLabel">
+            </div>
+            <div class="field full">
+              <label for="brandTagline">タグライン</label>
+              <input id="brandTagline">
+            </div>
+            <div class="field full">
+              <label for="brandLogo">ロゴURL</label>
+              <input id="brandLogo">
+              <input id="logoUpload" type="file" accept="image/*">
+            </div>
+            <div class="field">
+              <label for="lineUrl">公式公式LINE URL</label>
+              <input id="lineUrl">
+            </div>
+            <div class="field">
+              <label for="openChatUrl">オープンチャットURL</label>
+              <input id="openChatUrl">
+            </div>
+            <div class="field full">
+              <label for="xUrl">X URL</label>
+              <input id="xUrl">
+            </div>
+            <div class="field">
+              <label for="heroEyebrow">ヒーロー小見出し</label>
+              <input id="heroEyebrow">
+            </div>
+            <div class="field">
+              <label for="heroTitle">ヒーロータイトル</label>
+              <input id="heroTitle">
+            </div>
+            <div class="field full">
+              <label for="heroLead">ヒーロー本文</label>
+              <textarea id="heroLead" rows="4"></textarea>
+            </div>
+            <div class="field">
+              <label for="heroPrimary">メインCTA</label>
+              <input id="heroPrimary">
+            </div>
+            <div class="field">
+              <label for="heroSecondary">サブCTA</label>
+              <input id="heroSecondary">
+            </div>
+            <div class="field full">
+              <label for="heroMedia">トップ画像URL</label>
+              <input id="heroMedia">
+              <input id="heroMediaUpload" type="file" accept="image/*">
+              <div class="preview-thumb" id="heroPreview" aria-hidden="true"></div>
+            </div>
+          </div>
+          <button class="save-button" id="saveMain" type="button">基本情報を保存</button>
+        </section>
 
-  try {
-    return normalize(mergeData(clone(defaultData), JSON.parse(saved)));
-  } catch (error) {
-    console.warn("Saved content could not be parsed.", error);
-    return normalize(clone(defaultData));
-  }
-}
+        <section class="editor-card">
+          <h2>SEO / メタディスクリプション</h2>
+          <p class="admin-note">検索結果の説明文候補になる文章です。Googleは必ずこの文を表示するわけではありませんが、ページ内容と合っているほど採用されやすくなります。</p>
+          <div class="editor-grid">
+            <div class="field full">
+              <label for="seoIndex">ユアハーツ コミュニティとは</label>
+              <textarea id="seoIndex" rows="3"></textarea>
+            </div>
+            <div class="field full">
+              <label for="seoJobs">案件一覧</label>
+              <textarea id="seoJobs" rows="3"></textarea>
+            </div>
+            <div class="field full">
+              <label for="seoContact">お問い合わせ</label>
+              <textarea id="seoContact" rows="3"></textarea>
+            </div>
+            <div class="field full">
+              <label for="seoCompany">会社概要</label>
+              <textarea id="seoCompany" rows="3"></textarea>
+            </div>
+          </div>
+          <button class="save-button" id="saveSeo" type="button">SEOを保存</button>
+        </section>
 
-export function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+        <section class="editor-card">
+          <h2>案件編集</h2>
+          <div class="editor-grid">
+            <div class="field">
+              <label for="jobId">ID</label>
+              <input id="jobId" data-job-field>
+            </div>
+            <div class="field">
+              <label for="jobAudience">対象</label>
+              <select id="jobAudience" data-job-field>
+                <option value="individual">個人向け</option>
+                <option value="referral">紹介案件</option>
+                <option value="corporate">企業向け</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="jobCategory">カテゴリ</label>
+              <input id="jobCategory" data-job-field>
+            </div>
+            <div class="field">
+              <label for="jobStatus">状態</label>
+              <input id="jobStatus" data-job-field>
+            </div>
+            <div class="field">
+              <label for="jobPickup">ピックアップ</label>
+              <select id="jobPickup" data-job-field>
+                <option value="false">通常</option>
+                <option value="true">上部で流す</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="jobTitle">タイトル</label>
+              <input id="jobTitle" data-job-field>
+            </div>
+            <div class="field full">
+              <label for="jobSummary">概要</label>
+              <textarea id="jobSummary" rows="4" data-job-field></textarea>
+            </div>
+            <div class="field full">
+              <label for="jobReward">紹介料・報酬表示</label>
+              <input id="jobReward" data-job-field>
+            </div>
+            <div class="field full">
+              <label for="jobDetails">詳細項目JSON</label>
+              <textarea id="jobDetails" rows="8" data-job-field></textarea>
+            </div>
+          </div>
+          <button class="save-button" id="saveJob" type="button">案件を保存</button>
+        </section>
 
-export function resetData() {
-  localStorage.removeItem(STORAGE_KEY);
-}
-
-export function exportData(data) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "your-hearts-content.json";
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
-export function importFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        resolve(JSON.parse(String(reader.result)));
-      } catch (error) {
-        reject(error);
-      }
-    };
-    reader.onerror = reject;
-    reader.readAsText(file);
-  });
-}
-
-export function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-function mergeData(base, saved) {
-  if (Array.isArray(base)) return Array.isArray(saved) ? saved : base;
-  if (!isObject(base) || !isObject(saved)) return saved ?? base;
-
-  return Object.entries(base).reduce((next, [key, value]) => {
-    next[key] = key in saved ? mergeData(value, saved[key]) : value;
-    return next;
-  }, { ...saved });
-}
-
-function isObject(value) {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-
-function normalize(data) {
-  if (data.brand?.logo === "assets/logo-your-hearts.svg") {
-    data.brand.logo = "assets/your-hearts-logo.webp";
-  }
-  if (data.brand && !("xUrl" in data.brand)) {
-    data.brand.xUrl = "https://x.com/";
-  }
-  data.seo = data.seo || clone(defaultData.seo);
-  for (const [key, value] of Object.entries(defaultData.seo)) {
-    data.seo[key] = data.seo[key] || clone(value);
-    data.seo[key].description = data.seo[key].description || value.description;
-  }
-  return data;
-}
+        <section class="editor-card">
+          <h2>全データJSON</h2>
+          <p class="admin-note">目的、悩み、活動内容、報酬説明、運営情報など、細かな文言はここで直接編集できます。</p>
+          <div class="field">
+            <label for="jsonEditor">サイトデータ</label>
+            <textarea class="json-editor" id="jsonEditor" spellcheck="false"></textarea>
+          </div>
+          <button class="save-button" id="saveJson" type="button">JSONを保存</button>
+        </section>
+      </div>
+      <p class="form-status" id="status" aria-live="polite"></p>
+    </main>
+  </body>
+</html>

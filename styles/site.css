@@ -1780,3 +1780,43 @@ body.modal-open {
 .site-footer .brand-logo-full {
   mix-blend-mode: normal;
 }
+
+.hero [data-hero-lead] {
+  max-width: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .hero h1 {
+    font-size: clamp(20px, 5vw, 38px);
+    line-height: 1.02;
+    white-space: normal;
+  }
+
+  .hero [data-hero-lead] {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .hero-media,
+  .hero-media.has-image {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    aspect-ratio: 1680 / 901;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%, contain;
+  }
+}
+
+.site-footer .brand {
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+}
+
+.site-footer .brand-logo-full {
+  mix-blend-mode: normal;
+}
